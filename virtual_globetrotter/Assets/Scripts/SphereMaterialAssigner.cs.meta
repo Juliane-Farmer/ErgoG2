@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ec87686274dbf874ab08e281c33d13d8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - egyptMaterial: {fileID: 2100000, guid: 0942dcf0af7420d40996ba291b27f08c, type: 2}
+  - eiffelTowerMaterial: {fileID: 2100000, guid: d8cfdbeb10747f44e9bfcb88e2dd4f97, type: 2}
+  - sanFranciscoMaterial: {fileID: 2100000, guid: 52db004dd6f16044baefe4f9b0d8ddcf, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

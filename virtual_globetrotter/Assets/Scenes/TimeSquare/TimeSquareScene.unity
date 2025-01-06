@@ -119,6 +119,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &802125875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802125877}
+  - component: {fileID: 802125876}
+  - component: {fileID: 802125878}
+  m_Layer: 0
+  m_Name: EnvironmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &802125876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802125875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6817b6f4aaca1b459ad46f21e564a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rainEffect: {fileID: 0}
+  snowEffect: {fileID: 0}
+  sun: {fileID: 0}
+  seasonalSkyboxes: []
+--- !u!4 &802125877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802125875}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &802125878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802125875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec87686274dbf874ab08e281c33d13d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  egyptMaterial: {fileID: 2100000, guid: 0942dcf0af7420d40996ba291b27f08c, type: 2}
+  eiffelTowerMaterial: {fileID: 2100000, guid: d8cfdbeb10747f44e9bfcb88e2dd4f97, type: 2}
+  sanFranciscoMaterial: {fileID: 2100000, guid: 52db004dd6f16044baefe4f9b0d8ddcf, type: 2}
+  timesquareMaterial: {fileID: 2100000, guid: daaf3899a7822cb4286308c827e3c03e, type: 2}
+  twintowersMaterial: {fileID: 2100000, guid: 0aba6c227631ab347932092a8f84a9e4, type: 2}
 --- !u!1 &1183262669
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +523,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d07807ff12a8994fa0c4bd328002fb1, type: 2}
+  - {fileID: 2100000, guid: a410ceaf0ce8a0744bf9712cabee1566, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -545,3 +611,4 @@ SceneRoots:
   - {fileID: 1183262672}
   - {fileID: 1309541449}
   - {fileID: 1600617805}
+  - {fileID: 802125877}
