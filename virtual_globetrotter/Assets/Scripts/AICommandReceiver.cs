@@ -5,25 +5,25 @@ public class AICommandReceiver : MonoBehaviour
     public EnvironmentManager environmentManager;
     public SeasonSphereManager seasonSphereManager;
 
-    private void ProcessCommand(string json)
-    {
-        var command = JsonUtility.FromJson<AICommand>(json);
+    // private void ProcessCommand(string json)
+    // {
+    //     var command = JsonUtility.FromJson<AICommand>(json);
 
-        switch (command.action)
-        {
-            case "change_weather":
-                environmentManager.ChangeWeather(command.weather);
-                break;
+    //     switch (command.action)
+    //     {
+    //         case "change_weather":
+    //             environmentManager.ChangeWeather(command.weather);
+    //             break;
 
-            case "change_season":
-                seasonSphereManager.ChangeSeason(command.season);
-                break;
+    //         case "change_season":
+    //             seasonSphereManager.ChangeSeason(command.season);
+    //             break;
 
-            default:
-                Debug.LogError("Unknown action: " + command.action);
-                break;
-        }
-    }
+    //         default:
+    //             Debug.LogError("Unknown action: " + command.action);
+    //             break;
+    //     }
+    // }
 
     [System.Serializable]
     private class AICommand
