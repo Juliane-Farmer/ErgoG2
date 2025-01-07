@@ -3,35 +3,76 @@ using UnityEngine.SceneManagement;
 
 public class SphereMaterialAssigner : MonoBehaviour
 {
+    // Egypt Materials
     public Material egyptSunnyMaterial;
     public Material egyptRainyMaterial;
     public Material egyptSnowyMaterial;
 
+    // San Francisco Materials
+    public Material sanFranciscoSunnyMaterial;
+    public Material sanFranciscoRainyMaterial;
+    public Material sanFranciscoSnowyMaterial;
+
+    // Twin Towers Materials
+    public Material twinTowersSunnyMaterial;
+    public Material twinTowersRainyMaterial;
+    public Material twinTowersSnowyMaterial;
+
+    // Eiffel Tower Materials
     public Material eiffelSunnyMaterial;
     public Material eiffelRainyMaterial;
     public Material eiffelSnowyMaterial;
 
+    // Times Square Materials
+    public Material timeSquareSunnyMaterial;
+    public Material timeSquareRainyMaterial;
+    public Material timeSquareSnowyMaterial;
+
+    // Weather effects
     public GameObject rainEffect;
     public GameObject snowEffect;
 
     void Start()
     {
+        // Get the current scene name and weather
         string sceneName = SceneManager.GetActiveScene().name;
         string weather = GetWeatherFromAI();
 
+        // Find the ImageSphere GameObject
         GameObject imageSphere = GameObject.Find("ImageSphere");
         if (imageSphere != null)
         {
             Renderer sphereRenderer = imageSphere.GetComponent<Renderer>();
 
+            // Assign materials based on the scene and weather
             switch (sceneName)
             {
-                case "EgyptScene":
+                case "EgyptSunnyScene":
                     AssignWeatherMaterial(sphereRenderer, weather, egyptSunnyMaterial, egyptRainyMaterial, egyptSnowyMaterial);
                     break;
 
-                case "EiffelTowerScene":
+                case "SanFranciscoSunnyScene":
+                    AssignWeatherMaterial(sphereRenderer, weather, sanFranciscoSunnyMaterial, sanFranciscoRainyMaterial, sanFranciscoSnowyMaterial);
+                    break;
+
+                case "SanFranciscoRainScene":
+                    AssignWeatherMaterial(sphereRenderer, weather, sanFranciscoSunnyMaterial, sanFranciscoRainyMaterial, sanFranciscoSnowyMaterial);
+                    break;
+
+                case "TwinTowersScene":
+                    AssignWeatherMaterial(sphereRenderer, weather, twinTowersSunnyMaterial, twinTowersRainyMaterial, twinTowersSnowyMaterial);
+                    break;
+
+                case "EiffelTowerSunnyScene":
                     AssignWeatherMaterial(sphereRenderer, weather, eiffelSunnyMaterial, eiffelRainyMaterial, eiffelSnowyMaterial);
+                    break;
+
+                case "EiffelTowerSnowyScene":
+                    AssignWeatherMaterial(sphereRenderer, weather, eiffelSunnyMaterial, eiffelRainyMaterial, eiffelSnowyMaterial);
+                    break;
+
+                case "TimesSquareSunnyScene":
+                    AssignWeatherMaterial(sphereRenderer, weather, timeSquareSunnyMaterial, timeSquareRainyMaterial, timeSquareSnowyMaterial);
                     break;
 
                 default:
@@ -47,6 +88,7 @@ public class SphereMaterialAssigner : MonoBehaviour
 
     void AssignWeatherMaterial(Renderer sphereRenderer, string weather, Material sunny, Material rainy, Material snowy)
     {
+        // Assign the correct material and activate/deactivate weather effects
         switch (weather)
         {
             case "sunny":
@@ -75,6 +117,7 @@ public class SphereMaterialAssigner : MonoBehaviour
 
     string GetWeatherFromAI()
     {
-        return "sunny"; 
+        // Placeholder for AI integration: Replace this with real weather data from AI or other sources
+        return "sunny"; // Example: default to "sunny"
     }
 }

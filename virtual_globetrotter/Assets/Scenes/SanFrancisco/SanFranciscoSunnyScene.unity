@@ -500,9 +500,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec87686274dbf874ab08e281c33d13d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  egyptMaterial: {fileID: 0}
-  eiffelTowerMaterial: {fileID: 0}
-  sanFranciscoMaterial: {fileID: 0}
+  egyptSunnyMaterial: {fileID: 2100000, guid: 0942dcf0af7420d40996ba291b27f08c, type: 2}
+  egyptRainyMaterial: {fileID: 0}
+  egyptSnowyMaterial: {fileID: 0}
+  sanFranciscoSunnyMaterial: {fileID: 2100000, guid: 52db004dd6f16044baefe4f9b0d8ddcf, type: 2}
+  sanFranciscoRainyMaterial: {fileID: 2100000, guid: 27360485070efc243b1da9281541d62a, type: 2}
+  sanFranciscoSnowyMaterial: {fileID: 0}
+  twinTowersSunnyMaterial: {fileID: 2100000, guid: 0aba6c227631ab347932092a8f84a9e4, type: 2}
+  twinTowersRainyMaterial: {fileID: 0}
+  twinTowersSnowyMaterial: {fileID: 0}
+  eiffelSunnyMaterial: {fileID: 2100000, guid: d8cfdbeb10747f44e9bfcb88e2dd4f97, type: 2}
+  eiffelRainyMaterial: {fileID: 0}
+  eiffelSnowyMaterial: {fileID: 2100000, guid: 05728898633c47f4ba688a6cea5952a0, type: 2}
+  timeSquareSunnyMaterial: {fileID: 2100000, guid: daaf3899a7822cb4286308c827e3c03e, type: 2}
+  timeSquareRainyMaterial: {fileID: 0}
+  timeSquareSnowyMaterial: {fileID: 0}
+  rainEffect: {fileID: 0}
+  snowEffect: {fileID: 0}
 --- !u!1 &1993706414
 GameObject:
   m_ObjectHideFlags: 0

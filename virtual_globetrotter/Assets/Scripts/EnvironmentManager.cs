@@ -2,52 +2,54 @@ using UnityEngine;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    public GameObject rainEffect;    // Particle system for rain
-    public GameObject snowEffect;    // Particle system for snow
-    public Light sun;                // Directional light for day/sunny
-    public Material[] seasonalSkyboxes; // Skybox materials for seasons (autumn, winter, spring, summer)
+    // GameObjects for weather effects
+    public GameObject rainEffect;  // Drag your RainEffect prefab here in the Inspector
+    public GameObject snowEffect; // Drag your SnowEffect prefab here in the Inspector (optional)
 
-    public void ChangeWeather(string weatherType)
+    // The ImageSphere Renderer
+    public Renderer sphereRenderer; // Drag the ImageSphere's Renderer here in the Inspector
+
+    // Materials for each weather type
+    public Material sunnyMaterial;
+    public Material rainyMaterial;
+    public Material snowyMaterial;
+
+    // Method to change the weather
+    public void ChangeWeather(string weather)
     {
-        Debug.Log("Changing weather to: " + weatherType);
+        // Disable all weather effects initially
+        if (rainEffect != null) rainEffect.SetActive(false);
+        if (snowEffect != null) snowEffect.SetActive(false);
 
-        // Toggle weather effects
-        rainEffect.SetActive(weatherType == "rain");
-        snowEffect.SetActive(weatherType == "snow");
-
-        // Adjust lighting for sunny/cloudy conditions
-        sun.enabled = weatherType == "sunny";
-    }
-
-    public void ChangeSeason(string seasonType)
-    {
-        Debug.Log("Changing season to: " + seasonType);
-
-        // Change skybox based on the season
-        switch (seasonType.ToLower())
+        // Handle weather changes
+        switch (weather.ToLower())
         {
-            case "autumn":
-                RenderSettings.skybox = seasonalSkyboxes[0];
+            case "sunny":
+                sphereRenderer.material = sunnyMaterial; // Set the sphere material to sunny
+                Debug.Log("Weather changed to Sunny.");
                 break;
 
-            case "winter":
-                RenderSettings.skybox = seasonalSkyboxes[1];
+            case "rainy":
+                sphereRenderer.material = rainyMaterial; // Set the sphere material to rainy
+                if (rainEffect != null) rainEffect.SetActive(true); // Enable rain particles
+                Debug.Log("Weather changed to Rainy.");
                 break;
 
-            case "spring":
-                RenderSettings.skybox = seasonalSkyboxes[2];
-                break;
-
-            case "summer":
-                RenderSettings.skybox = seasonalSkyboxes[3];
+            case "snowy":
+                sphereRenderer.material = snowyMaterial; // Set the sphere material to snowy
+                if (snowEffect != null) snowEffect.SetActive(true); // Enable snow particles
+                Debug.Log("Weather changed to Snowy.");
                 break;
 
             default:
-                Debug.LogError("Unknown season: " + seasonType);
+                Debug.LogWarning("Unknown weather type: " + weather);
                 break;
         }
+    }
 
-        // Optional: Adjust lighting intensity or color for different seasons
-        DynamicGI.UpdateEnvironment();
+    // Example: Simulate weather at the start of the game
+    void Start()
+    {
+        ChangeWeather("rainy"); // Start with rainy weather for testing
     }
 }
