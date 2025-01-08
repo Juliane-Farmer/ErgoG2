@@ -144,15 +144,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802125875}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6817b6f4aaca1b459ad46f21e564a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rainEffect: {fileID: 0}
-  snowEffect: {fileID: 0}
-  sun: {fileID: 0}
-  seasonalSkyboxes: []
 --- !u!4 &802125877
 Transform:
   m_ObjectHideFlags: 0
@@ -195,8 +191,12 @@ MonoBehaviour:
   timeSquareSunnyMaterial: {fileID: 2100000, guid: daaf3899a7822cb4286308c827e3c03e, type: 2}
   timeSquareRainyMaterial: {fileID: 0}
   timeSquareSnowyMaterial: {fileID: 0}
-  rainEffect: {fileID: 0}
+  transitionDuration: 2
   snowEffect: {fileID: 0}
+  sphereRenderer: {fileID: 0}
+  sunnyMaterial: {fileID: 0}
+  rainyMaterial: {fileID: 0}
+  snowyMaterial: {fileID: 0}
 --- !u!1 &1183262669
 GameObject:
   m_ObjectHideFlags: 0
