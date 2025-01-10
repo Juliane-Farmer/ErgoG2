@@ -14,6 +14,7 @@ public class ManagingEnvironments : MonoBehaviour
     public GameObject sphere7;  // Sphere for Key '7'
     public GameObject sphere8;  // Sphere for Key '8'
     public GameObject sphere9;  // Sphere for Key '9'
+    public GameObject sphere10;  // Sphere for Key '9'
 
     [Header("Transition Settings")]
     public GameObject transitionSphere;    // Sphere for transitions
@@ -34,16 +35,6 @@ public class ManagingEnvironments : MonoBehaviour
 
         // Initialize the transition sphere's opacity to 0 (invisible)
         SetTransitionSphereOpacity(0);
-
-        // Initialize Particle System to be inactive at start
-        if (particleSystemObject != null)
-        {
-            particleSystemObject.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Particle System Object is not assigned.");
-        }
     }
 
     void Update()
@@ -88,6 +79,10 @@ public class ManagingEnvironments : MonoBehaviour
         {
             StartCoroutine(SwitchSphere(sphere9));
         }
+        if (Input.GetKeyDown(KeyCode.Alpha0) && currentSphere != sphere10)
+        {
+            StartCoroutine(SwitchSphere(sphere10));
+        }
     }
 
     /// <summary>
@@ -118,9 +113,6 @@ public class ManagingEnvironments : MonoBehaviour
         ActivateSphere(newSphere);
         currentSphere = newSphere;
 
-        // Handle special effects based on the selected sphere
-        HandleSpecialEffects(newSphere);
-
         // Step 3: Fade out the transition sphere
         yield return StartCoroutine(FadeTransitionSphere(1f, 0f));
 
@@ -150,6 +142,7 @@ public class ManagingEnvironments : MonoBehaviour
         if (sphere7 != null) sphere7.SetActive(false);
         if (sphere8 != null) sphere8.SetActive(false);
         if (sphere9 != null) sphere9.SetActive(false);
+        if (sphere10 != null) sphere10.SetActive(false);
 
         // Activate the desired sphere
         if (activeSphere != null)
@@ -210,23 +203,4 @@ public class ManagingEnvironments : MonoBehaviour
     /// Specifically, activates the Particle System when sphere8 is active.
     /// </summary>
     /// <param name="activeSphere">The currently active sphere.</param>
-    void HandleSpecialEffects(GameObject activeSphere)
-    {
-        if (particleSystemObject == null)
-        {
-            // Particle System not assigned; no action needed
-            return;
-        }
-
-        if (activeSphere == sphere8)
-        {
-            // Activate Particle System for sphere8
-            particleSystemObject.SetActive(true);
-        }
-        else
-        {
-            // Deactivate Particle System for all other spheres
-            particleSystemObject.SetActive(false);
-        }
-    }
 }
