@@ -8,28 +8,42 @@ public class ManagingEnvironments : MonoBehaviour
 {
     // Assign the spheres in the Inspector
     [Header("Environment Spheres")]
-    public GameObject sphere0;  // Sphere for Key 'Backspace' (or your chosen key)
-    public GameObject sphere1;  // Sphere for Key '1'
-    public GameObject sphere2;  // Sphere for Key '2'
-    public GameObject sphere3;  // Sphere for Key '3'
-    public GameObject sphere4;  // Sphere for Key '4'
-    public GameObject sphere5;  // Sphere for Key '5'
-    public GameObject sphere6;  // Sphere for Key '6'
-    public GameObject sphere7;  // Sphere for Key '7'
-    public GameObject sphere8;  // Sphere for Key '8'
-    public GameObject sphere9;  // Sphere for Key '9'
-    public GameObject sphere10; // Sphere for Key '0'
+    public GameObject sphere0; 
+    public GameObject sphere1; 
+    public GameObject sphere1_night; 
+    public GameObject sphere2;  
+    public GameObject sphere2_night;  
+    public GameObject sphere3; 
+    public GameObject sphere3_night; 
+    public GameObject sphere4; 
+    public GameObject sphere4_night; 
+    public GameObject sphere4_snowy; 
+    public GameObject sphere5;  
+    public GameObject sphere5_night;
+    public GameObject sphere5_snowy;
+    public GameObject sphere6;  
+    public GameObject sphere6_night;  
+    public GameObject sphere6_snowy;  
+    public GameObject sphere7;  
+    public GameObject sphere8;  
+    public GameObject sphere8_night;  
+    public GameObject sphere9;
+    public GameObject sphere9_night;
+    public GameObject sphere10; 
+    public GameObject sphere10_night; 
+    public GameObject sphere10_rain; 
+
     [Header("WorldMap Settings")]
     public GameObject image; 
     private Image imgComponent;
     private Color originalColor;
     public GameObject button; 
-
+    
     [Header("Transition Settings")]
     public GameObject transitionSphere;    // Sphere for transitions
+    public GameObject transitionSound;
     public float transitionDuration = 2.0f; // Total duration of the transition (fade in and fade out)
     public Material transitionMaterial;    // Material for the transition sphere
-
     private GameObject currentSphere;      // Currently active sphere
     private bool isTransitioning = false;  // Flag to prevent input during transitions
 
@@ -61,45 +75,105 @@ public class ManagingEnvironments : MonoBehaviour
             imgComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, 255f);
             button.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && currentSphere != sphere1)
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            StartCoroutine(SwitchSphere(sphere1));
+            if (currentSphere == sphere1)
+            {
+                StartCoroutine(SwitchSphere(sphere1_night));
+            }
+            if (currentSphere == sphere2)
+            {
+                StartCoroutine(SwitchSphere(sphere2_night));
+            }
+            if (currentSphere == sphere3)
+            {
+                StartCoroutine(SwitchSphere(sphere3_night));
+            }
+            if (currentSphere == sphere4 || currentSphere == sphere4_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere4_night));
+            }
+            if (currentSphere == sphere5 || currentSphere == sphere5_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere5_night));
+            }
+            if (currentSphere == sphere6 || currentSphere == sphere6_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere6_night));
+            }
+            if (currentSphere == sphere8)
+            {
+                StartCoroutine(SwitchSphere(sphere8_night));
+            }
+            if (currentSphere == sphere9)
+            {
+                StartCoroutine(SwitchSphere(sphere9_night));
+            }
+            if (currentSphere == sphere10 || currentSphere == sphere10_rain)
+            {
+                StartCoroutine(SwitchSphere(sphere10_night));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && currentSphere != sphere2)
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            StartCoroutine(SwitchSphere(sphere2));
+            if (currentSphere == sphere1_night)
+            {
+                StartCoroutine(SwitchSphere(sphere1));
+            }
+            if (currentSphere == sphere2_night)
+            {
+                StartCoroutine(SwitchSphere(sphere2));
+            }
+            if (currentSphere == sphere3_night)
+            {
+                StartCoroutine(SwitchSphere(sphere3));
+            }
+            if (currentSphere == sphere4_night || currentSphere == sphere4_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere4));
+            }
+            if (currentSphere == sphere5_night || currentSphere == sphere5_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere5));
+            }
+            if (currentSphere == sphere6_night || currentSphere == sphere6_snowy)
+            {
+                StartCoroutine(SwitchSphere(sphere6));
+            }
+            if (currentSphere == sphere8_night)
+            {
+                StartCoroutine(SwitchSphere(sphere8));
+            }
+            if (currentSphere == sphere9_night)
+            {
+                StartCoroutine(SwitchSphere(sphere9));
+            }
+            if (currentSphere == sphere10_night || currentSphere == sphere10_rain)
+            {
+                StartCoroutine(SwitchSphere(sphere10));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && currentSphere != sphere3)
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            StartCoroutine(SwitchSphere(sphere3));
+            if (currentSphere == sphere4_night || currentSphere == sphere4)
+            {
+                StartCoroutine(SwitchSphere(sphere4_snowy));
+            }
+            if (currentSphere == sphere5_night || currentSphere == sphere5)
+            {
+                StartCoroutine(SwitchSphere(sphere5_snowy));
+            }
+            if (currentSphere == sphere6_night || currentSphere == sphere6)
+            {
+                StartCoroutine(SwitchSphere(sphere6_snowy));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && currentSphere != sphere4)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(SwitchSphere(sphere4));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5) && currentSphere != sphere5)
-        {
-            StartCoroutine(SwitchSphere(sphere5));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6) && currentSphere != sphere6)
-        {
-            StartCoroutine(SwitchSphere(sphere6));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7) && currentSphere != sphere7)
-        {
-            StartCoroutine(SwitchSphere(sphere7));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8) && currentSphere != sphere8)
-        {
-            StartCoroutine(SwitchSphere(sphere8));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9) && currentSphere != sphere9)
-        {
-            StartCoroutine(SwitchSphere(sphere9));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0) && currentSphere != sphere10)
-        {
-            StartCoroutine(SwitchSphere(sphere10));
+            if (currentSphere == sphere10_night || currentSphere == sphere10)
+            {
+                StartCoroutine(SwitchSphere(sphere10_rain));
+            }
         }
     }
 
@@ -144,15 +218,29 @@ public class ManagingEnvironments : MonoBehaviour
         // Deactivate all spheres
         if (sphere0 != null) sphere0.SetActive(false);
         if (sphere1 != null) sphere1.SetActive(false);
+        if (sphere1_night != null) sphere1_night.SetActive(false);
         if (sphere2 != null) sphere2.SetActive(false);
+        if (sphere2_night != null) sphere2_night.SetActive(false);
         if (sphere3 != null) sphere3.SetActive(false);
+        if (sphere3_night != null) sphere3_night.SetActive(false);
         if (sphere4 != null) sphere4.SetActive(false);
+        if (sphere4_night != null) sphere4_night.SetActive(false);
+        if (sphere4_snowy != null) sphere4_snowy.SetActive(false);
         if (sphere5 != null) sphere5.SetActive(false);
+        if (sphere5_night != null) sphere5_night.SetActive(false);
+        if (sphere5_snowy != null) sphere5_snowy.SetActive(false);
         if (sphere6 != null) sphere6.SetActive(false);
+        if (sphere6_night != null) sphere6_night.SetActive(false);
+        if (sphere6_snowy != null) sphere6_snowy.SetActive(false);
         if (sphere7 != null) sphere7.SetActive(false);
         if (sphere8 != null) sphere8.SetActive(false);
+        if (sphere8_night != null) sphere8_night.SetActive(false);
         if (sphere9 != null) sphere9.SetActive(false);
+        if (sphere9_night != null) sphere9_night.SetActive(false);
         if (sphere10 != null) sphere10.SetActive(false);
+        if (sphere10_night != null) sphere10_night.SetActive(false);
+        if (sphere10_rain != null) sphere10_rain.SetActive(false);
+
         if (activeSphere != null) activeSphere.SetActive(true);
     }
 
@@ -193,7 +281,106 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
-            StartCoroutine(FadeOutImageCoroutine());
+            StartCoroutine(FadeOutImageCoroutine(sphere1));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere2()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere2));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere3()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere3));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere4()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere4));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere5()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere5));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere6()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere6));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere7()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere7));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere8()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere8));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere9()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere9));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+    public void SwitchToSphere10()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(FadeOutImageCoroutine(sphere10));
         }
         else
         {
@@ -202,7 +389,7 @@ public class ManagingEnvironments : MonoBehaviour
     }
 
 
-    IEnumerator FadeOutImageCoroutine()
+    IEnumerator FadeOutImageCoroutine(GameObject newSphere)
     {
         if (image == null)
         {
@@ -233,7 +420,6 @@ public class ManagingEnvironments : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             float alpha = Mathf.Lerp(originalColor.a, 0f, elapsedTime / fadeDuration);
-            Debug.Log(alpha);
             imgComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
             yield return null;
         }
@@ -248,7 +434,7 @@ public class ManagingEnvironments : MonoBehaviour
         // Start rotating sphere0 with increasing speed
         if (sphere0 != null)
         {
-            StartCoroutine(RotateSphere0Coroutine());
+            StartCoroutine(RotateSphere0Coroutine(newSphere));
         }
         else
         {
@@ -256,7 +442,7 @@ public class ManagingEnvironments : MonoBehaviour
         }
     }
 
-    IEnumerator RotateSphere0Coroutine()
+    IEnumerator RotateSphere0Coroutine(GameObject newSphere)
     {
         if (sphere0 == null)
         {
@@ -289,6 +475,7 @@ public class ManagingEnvironments : MonoBehaviour
             yield break;
         }
 
+        transitionSound.SetActive(true);
         while (elapsedTime < rotationDuration)
         {
             float deltaTime = Time.deltaTime;
@@ -323,13 +510,14 @@ public class ManagingEnvironments : MonoBehaviour
             }
             else if (fadedIn)
             {
-                ActivateSphere(sphere1);
-                currentSphere = sphere1;
+                ActivateSphere(newSphere);
+                currentSphere = newSphere;
                 break;
             }
 
             yield return null;
         }
+        transitionSound.SetActive(false);
         yield return StartCoroutine(FadeTransitionSphere(1f, 0f));
         if (transitionSphere != null)
         {
