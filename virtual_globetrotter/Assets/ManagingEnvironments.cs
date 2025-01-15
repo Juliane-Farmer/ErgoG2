@@ -69,6 +69,7 @@ public class ManagingEnvironments : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M) && currentSphere != sphere0)
         {
             StartCoroutine(SwitchSphere(sphere0));
+            sphere0.transform.eulerAngles = Vector3.zero;
             image.SetActive(true);
             Image imgComponent = image.GetComponent<Image>();
             Color originalColor = imgComponent.color;
