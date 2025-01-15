@@ -68,106 +68,20 @@ public class ManagingEnvironments : MonoBehaviour
         // Check for key inputs (Backspace, 1-9, 0)
         if (Input.GetKeyDown(KeyCode.M) && currentSphere != sphere0)
         {
+            string location = "Space";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
+
             StartCoroutine(SwitchSphere(sphere0));
+
             sphere0.transform.eulerAngles = Vector3.zero;
+
             image.SetActive(true);
             Image imgComponent = image.GetComponent<Image>();
             Color originalColor = imgComponent.color;
             imgComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, 255f);
+
             button.SetActive(true);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            if (currentSphere == sphere1)
-            {
-                StartCoroutine(SwitchSphere(sphere1_night));
-            }
-            if (currentSphere == sphere2)
-            {
-                StartCoroutine(SwitchSphere(sphere2_night));
-            }
-            if (currentSphere == sphere3)
-            {
-                StartCoroutine(SwitchSphere(sphere3_night));
-            }
-            if (currentSphere == sphere4 || currentSphere == sphere4_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere4_night));
-            }
-            if (currentSphere == sphere5 || currentSphere == sphere5_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere5_night));
-            }
-            if (currentSphere == sphere6 || currentSphere == sphere6_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere6_night));
-            }
-            if (currentSphere == sphere8)
-            {
-                StartCoroutine(SwitchSphere(sphere8_night));
-            }
-            if (currentSphere == sphere9)
-            {
-                StartCoroutine(SwitchSphere(sphere9_night));
-            }
-            if (currentSphere == sphere10 || currentSphere == sphere10_rain)
-            {
-                StartCoroutine(SwitchSphere(sphere10_night));
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (currentSphere == sphere1_night)
-            {
-                StartCoroutine(SwitchSphere(sphere1));
-            }
-            if (currentSphere == sphere2_night)
-            {
-                StartCoroutine(SwitchSphere(sphere2));
-            }
-            if (currentSphere == sphere3_night)
-            {
-                StartCoroutine(SwitchSphere(sphere3));
-            }
-            if (currentSphere == sphere4_night || currentSphere == sphere4_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere4));
-            }
-            if (currentSphere == sphere5_night || currentSphere == sphere5_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere5));
-            }
-            if (currentSphere == sphere6_night || currentSphere == sphere6_snowy)
-            {
-                StartCoroutine(SwitchSphere(sphere6));
-            }
-            if (currentSphere == sphere8_night)
-            {
-                StartCoroutine(SwitchSphere(sphere8));
-            }
-            if (currentSphere == sphere9_night)
-            {
-                StartCoroutine(SwitchSphere(sphere9));
-            }
-            if (currentSphere == sphere10_night || currentSphere == sphere10_rain)
-            {
-                StartCoroutine(SwitchSphere(sphere10));
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (currentSphere == sphere4_night || currentSphere == sphere4)
-            {
-                StartCoroutine(SwitchSphere(sphere4_snowy));
-            }
-            if (currentSphere == sphere5_night || currentSphere == sphere5)
-            {
-                StartCoroutine(SwitchSphere(sphere5_snowy));
-            }
-            if (currentSphere == sphere6_night || currentSphere == sphere6)
-            {
-                StartCoroutine(SwitchSphere(sphere6_snowy));
-            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -175,6 +89,102 @@ public class ManagingEnvironments : MonoBehaviour
             {
                 StartCoroutine(SwitchSphere(sphere10_rain));
             }
+        }
+    }
+
+    public void SwitchToSnow()
+    {
+        if (currentSphere == sphere4_night || currentSphere == sphere4)
+        {
+            StartCoroutine(SwitchSphere(sphere4_snowy));
+        }
+        if (currentSphere == sphere5_night || currentSphere == sphere5)
+        {
+            StartCoroutine(SwitchSphere(sphere5_snowy));
+        }
+        if (currentSphere == sphere6_night || currentSphere == sphere6)
+        {
+            StartCoroutine(SwitchSphere(sphere6_snowy));
+        }
+    }
+
+    public void SwitchToNight()
+    {
+        if (currentSphere == sphere1)
+        {
+            StartCoroutine(SwitchSphere(sphere1_night));
+        }
+        if (currentSphere == sphere2)
+        {
+            StartCoroutine(SwitchSphere(sphere2_night));
+        }
+        if (currentSphere == sphere3)
+        {
+            StartCoroutine(SwitchSphere(sphere3_night));
+        }
+        if (currentSphere == sphere4 || currentSphere == sphere4_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere4_night));
+        }
+        if (currentSphere == sphere5 || currentSphere == sphere5_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere5_night));
+        }
+        if (currentSphere == sphere6 || currentSphere == sphere6_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere6_night));
+        }
+        if (currentSphere == sphere8)
+        {
+            StartCoroutine(SwitchSphere(sphere8_night));
+        }
+        if (currentSphere == sphere9)
+        {
+            StartCoroutine(SwitchSphere(sphere9_night));
+        }
+        if (currentSphere == sphere10 || currentSphere == sphere10_rain)
+        {
+            StartCoroutine(SwitchSphere(sphere10_night));
+        }
+    }
+
+    public void SwitchToDay()
+    {
+        if (currentSphere == sphere1_night)
+        {
+            StartCoroutine(SwitchSphere(sphere1));
+        }
+        if (currentSphere == sphere2_night)
+        {
+            StartCoroutine(SwitchSphere(sphere2));
+        }
+        if (currentSphere == sphere3_night)
+        {
+            StartCoroutine(SwitchSphere(sphere3));
+        }
+        if (currentSphere == sphere4_night || currentSphere == sphere4_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere4));
+        }
+        if (currentSphere == sphere5_night || currentSphere == sphere5_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere5));
+        }
+        if (currentSphere == sphere6_night || currentSphere == sphere6_snowy)
+        {
+            StartCoroutine(SwitchSphere(sphere6));
+        }
+        if (currentSphere == sphere8_night)
+        {
+            StartCoroutine(SwitchSphere(sphere8));
+        }
+        if (currentSphere == sphere9_night)
+        {
+            StartCoroutine(SwitchSphere(sphere9));
+        }
+        if (currentSphere == sphere10_night || currentSphere == sphere10_rain)
+        {
+            StartCoroutine(SwitchSphere(sphere10));
         }
     }
 
@@ -282,6 +292,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Egypt, Pyramids";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere1));
         }
         else
@@ -293,6 +306,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "India, Taj Mahal";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere2));
         }
         else
@@ -304,6 +320,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Mount Everest";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere3));
         }
         else
@@ -315,6 +334,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Japan, Temple";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere4));
         }
         else
@@ -326,6 +348,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "China, The Great Wall of China";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere5));
         }
         else
@@ -337,6 +362,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Paris, Eiffel Tower";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere6));
         }
         else
