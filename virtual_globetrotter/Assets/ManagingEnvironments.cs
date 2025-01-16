@@ -83,12 +83,13 @@ public class ManagingEnvironments : MonoBehaviour
 
             button.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+    }
+
+    public void SwitchToRain()
+    {
+        if (currentSphere == sphere10_night || currentSphere == sphere10)
         {
-            if (currentSphere == sphere10_night || currentSphere == sphere10)
-            {
-                StartCoroutine(SwitchSphere(sphere10_rain));
-            }
+            StartCoroutine(SwitchSphere(sphere10_rain));
         }
     }
 
@@ -376,6 +377,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Ocean";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere7));
         }
         else
@@ -387,6 +391,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Finland";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere8));
         }
         else
@@ -398,6 +405,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "Brazil, Christ The Redeemer";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere9));
         }
         else
@@ -409,6 +419,9 @@ public class ManagingEnvironments : MonoBehaviour
     {
         if (!isTransitioning)
         {
+            string location = "San Fransisco, Golden Gate Bridge";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere10));
         }
         else

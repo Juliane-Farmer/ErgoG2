@@ -110,6 +110,10 @@ public class TCPServer : MonoBehaviour
             {
                 managingEnvironments.SwitchToSnow();
             }
+            else if (message.ToUpper() == "RAIN")
+            {
+                managingEnvironments.SwitchToRain();
+            }
         }
     }
 
