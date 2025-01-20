@@ -1,0 +1,17 @@
+# MTL file - created by a modified js OBJExporter
+
+newmtl tripo_material_85de6d56-4cbc-49f6-aba6-96adfb34a60b
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pm 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 1 1 1
+Ke 0 0 0
+map_Kd tripo_material_85de6d56-4cbc-49f6-aba6-96adfb34a60b.png
+map_Pm metalnessMap1.png
+map_Pr metalnessMap1.png
+norm normalMap1.png
