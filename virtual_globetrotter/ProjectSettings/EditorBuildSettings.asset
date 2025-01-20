@@ -8,24 +8,27 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Egypt/EgyptSunnyScene.unity
     guid: c0f82a8e7f2febf4f8cebf22f7995863
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EiffelTower/EiffelTowerSnowyScene.unity
     guid: e1b3b7f66a56c6141a2339b251b9ef6e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EiffelTower/EiffelTowerSunnyScene.unity
     guid: ec421137eb148ca4fbaa55c402519f39
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SanFrancisco/SanFranciscoRainScene.unity
     guid: c8c4d65544cc92c4d9cb8383dbf10ad2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SanFrancisco/SanFranciscoSunnyScene.unity
     guid: a8545bb5f8f6ecf41bb4b1802721e6da
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TimeSquare/TimeSquareSunnyScene.unity
     guid: fddcdaf5c0d216944b19a121d0473859
+  - enabled: 1
+    path: Assets/Scenes/MAINSCENE.unity
+    guid: 52a199f1a73ebdf45bca0cdcb15937d4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
