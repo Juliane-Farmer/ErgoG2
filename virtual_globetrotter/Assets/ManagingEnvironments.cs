@@ -494,14 +494,14 @@ public class ManagingEnvironments : MonoBehaviour
         }
 
         // Define rotation parameters
-        float rotationDuration = 8f;        // Total rotation time in seconds
+        float rotationDuration = 5f;        // Total rotation time in seconds
         float initialSpeed = 10f;            // Initial rotation speed in degrees per second
-        float finalSpeed = 1000f;             // Maximum rotation speed in degrees per second
+        float finalSpeed = 500f;             // Maximum rotation speed in degrees per second
         float elapsedTime = 0f;
         bool hasTriggeredTransition = false;
 
         // Define transition parameters
-        float transitionStartTime = rotationDuration / 4f; // Time to start the transition
+        float transitionStartTime = rotationDuration / 5f; // Time to start the transition
         float transitionElapsed = 0f;
         bool isFadingIn = false;
         bool fadedIn = false;
