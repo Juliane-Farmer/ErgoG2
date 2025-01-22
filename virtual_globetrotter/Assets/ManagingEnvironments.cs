@@ -9,6 +9,7 @@ public class ManagingEnvironments : MonoBehaviour
     // Assign the spheres in the Inspector
     [Header("Environment Spheres")]
     public GameObject sphere0; 
+    public GameObject sphere0A; 
     public GameObject sphere1; 
     public GameObject sphere1_night; 
     public GameObject sphere2;  
@@ -486,7 +487,7 @@ public class ManagingEnvironments : MonoBehaviour
 
     IEnumerator RotateSphere0Coroutine(GameObject newSphere)
     {
-        if (sphere0 == null)
+        if (sphere0 == null || sphere0A == null)
         {
             Debug.LogError("Sphere0 is not assigned.");
             yield break;
@@ -527,7 +528,7 @@ public class ManagingEnvironments : MonoBehaviour
             float currentSpeed = Mathf.Lerp(initialSpeed, finalSpeed, elapsedTime / rotationDuration);
 
             // Rotate the sphere
-            sphere0.transform.Rotate(Vector3.up, currentSpeed * deltaTime, Space.World);
+            sphere0A.transform.Rotate(Vector3.up, currentSpeed * deltaTime, Space.World);
 
             // Check if it's time to start the transition
             if (!hasTriggeredTransition && elapsedTime >= transitionStartTime)
