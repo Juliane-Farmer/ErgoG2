@@ -3,7 +3,7 @@ using UnityEngine;
 public class ToggleEnable : MonoBehaviour
 {
     // The component to toggle (can be any MonoBehaviour-derived component)
-    public MonoBehaviour targetComponent;
+    public GameObject targetComponent;
 
     // Time interval for toggling (in seconds)
     public float toggleInterval = 4.0f;
@@ -22,7 +22,14 @@ public class ToggleEnable : MonoBehaviour
     {
         if (targetComponent != null)
         {
-            targetComponent.enabled = !targetComponent.enabled;
+            if (targetComponent.activeSelf == true)
+            {
+                targetComponent.SetActive(false);
+            }
+            else
+            {
+                targetComponent.SetActive(true);
+            }
         }
     }
 
