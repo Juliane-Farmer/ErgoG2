@@ -33,6 +33,7 @@ public class ManagingEnvironments : MonoBehaviour
     public GameObject sphere10; 
     public GameObject sphere10_night; 
     public GameObject sphere10_rain; 
+    public GameObject sphere11;
 
     [Header("WorldMap Settings")]
     public GameObject image; 
@@ -253,6 +254,7 @@ public class ManagingEnvironments : MonoBehaviour
         if (sphere10 != null) sphere10.SetActive(false);
         if (sphere10_night != null) sphere10_night.SetActive(false);
         if (sphere10_rain != null) sphere10_rain.SetActive(false);
+        if (sphere11 != null) sphere11.SetActive(false);
 
         if (activeSphere != null) activeSphere.SetActive(true);
     }
@@ -424,6 +426,21 @@ public class ManagingEnvironments : MonoBehaviour
             TCPServer.Instance.SendMessageToAll(location);
             Debug.Log($"[MessageSender] Sent to clients: {location}");
             StartCoroutine(FadeOutImageCoroutine(sphere10));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot initiate fade-out and switch: A transition is already in progress.");
+        }
+    }
+
+    public void SwitchToSphere11()
+    {
+        if (!isTransitioning)
+        {
+            string location = "Space";
+            TCPServer.Instance.SendMessageToAll(location);
+            Debug.Log($"[MessageSender] Sent to clients: {location}");
+            StartCoroutine(FadeOutImageCoroutine(sphere11));
         }
         else
         {
