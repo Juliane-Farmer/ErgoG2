@@ -4964,6 +4964,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!20 &376851508 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9006323548206546453, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
+  m_PrefabInstance: {fileID: 1682586571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &386167951
 GameObject:
   m_ObjectHideFlags: 0
@@ -20930,7 +20935,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 1013895434}
+  m_Camera: {fileID: 376851508}
   m_PlaneDistance: 10
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -32648,7 +32653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &1013895434
 Camera:
   m_ObjectHideFlags: 0
@@ -71675,7 +71680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalRotation.x
@@ -71683,7 +71688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalRotation.z
@@ -71695,7 +71700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221619, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -71707,7 +71712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549104221620, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9006323549151931849, guid: bcff10f296240554d8e4f81c3559dcf3, type: 3}
       propertyPath: m_IsActive
