@@ -1,39 +1,38 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using UnityEngine;
+using System.IO;
+using UnityEngine.Networking; // For UnityWebRequest & GetAudioClip
 
 public class TCPServer : MonoBehaviour
 {
-    // Singleton instance
     public static TCPServer Instance { get; private set; }
 
-    // Server configuration
     public int port = 65432;
     private TcpListener server;
     private Thread serverThread;
     private bool isRunning = false;
 
-    // To keep track of connected clients
     private ConcurrentBag<ClientHandler> clients = new ConcurrentBag<ClientHandler>();
     public ManagingEnvironments managingEnvironments;
 
-    // Queue to store incoming messages from clients
+    // Queue for incoming messages
     private ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>();
 
     void Awake()
     {
-        // Implement Singleton pattern
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject); // Optional: Persist across scenes
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
@@ -45,13 +44,11 @@ public class TCPServer : MonoBehaviour
     {
         try
         {
-            // Initialize the server to listen on the specified port
             server = new TcpListener(IPAddress.Any, port);
             server.Start();
             isRunning = true;
             Debug.Log($"TCP Server started on port {port}.");
 
-            // Start the server thread to accept clients
             serverThread = new Thread(AcceptClients);
             serverThread.IsBackground = true;
             serverThread.Start();
@@ -68,11 +65,9 @@ public class TCPServer : MonoBehaviour
         {
             while (isRunning)
             {
-                // Accept a pending client connection
                 TcpClient client = server.AcceptTcpClient();
                 Debug.Log("Client connected.");
 
-                // Create a new handler for the connected client, passing the message queue
                 ClientHandler handler = new ClientHandler(client, messageQueue);
                 clients.Add(handler);
                 handler.Start();
@@ -91,35 +86,119 @@ public class TCPServer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Main Unity update loop: we dequeue any messages from Python,
+    /// parse them as JSON (if possible), or handle them as plain strings.
+    /// </summary>
     void Update()
     {
-        // Process incoming messages from the queue
         while (messageQueue.TryDequeue(out string message))
         {
-            // Here you can parse and handle the message as needed
-            Debug.Log($"[Update] Updating Scene: {message}");
-            if (message.ToUpper() == "DAY")
+            Debug.Log($"[Update] Received from Python: {message}");
+
+            // Attempt to parse JSON with UnityEngine.JsonUtility
+            try
             {
-                managingEnvironments.SwitchToDay();
+                MyAudioMessage parsed = JsonUtility.FromJson<MyAudioMessage>(message);
+
+                // If we successfully decoded a Category and AudioData, handle it.
+                if (!string.IsNullOrEmpty(parsed.Category) && 
+                    !string.IsNullOrEmpty(parsed.AudioData))
+                {
+                    Debug.Log($"[TCPServer] Category: {parsed.Category}");
+                    Debug.Log($"[TCPServer] AudioData length: {parsed.AudioData.Length}");
+
+                    // 1) Switch environment
+                    switch (parsed.Category.ToUpper())
+                    {
+                        case "DAY":
+                            managingEnvironments.SwitchToDay();
+                            break;
+                        case "NIGHT":
+                            managingEnvironments.SwitchToNight();
+                            break;
+                        case "SNOW":
+                            managingEnvironments.SwitchToSnow();
+                            break;
+                        case "RAIN":
+                            managingEnvironments.SwitchToRain();
+                            break;
+                        default:
+                            Debug.Log($"[TCPServer] Unrecognized category: {parsed.Category}");
+                            break;
+                    }
+
+                    // 2) Decode audio and play
+                    byte[] mp3Bytes = Convert.FromBase64String(parsed.AudioData);
+                    string filePath = Path.Combine(Application.persistentDataPath, "tempAudio.mp3");
+                    File.WriteAllBytes(filePath, mp3Bytes);
+                    StartCoroutine(PlayAudioClip(filePath));
+                }
+                else
+                {
+                    // Probably not a valid MyAudioMessage, so treat as plain text
+                    HandlePlainString(message);
+                }
             }
-            else if (message.ToUpper() == "NIGHT")
+            catch (Exception)
             {
-                managingEnvironments.SwitchToNight();
+                // If it's not valid JSON, handle as a plain text environment command
+                HandlePlainString(message);
             }
-            else if (message.ToUpper() == "SNOW")
+        }
+    }
+
+    /// <summary>
+    /// Handles plain text commands like "DAY", "NIGHT", etc.
+    /// </summary>
+    void HandlePlainString(string message)
+    {
+        string msg = message.ToUpper().Trim();
+        Debug.Log($"[TCPServer] Handling plain string: {msg}");
+
+        if (msg == "DAY")       managingEnvironments.SwitchToDay();
+        else if (msg == "NIGHT") managingEnvironments.SwitchToNight();
+        else if (msg == "SNOW")  managingEnvironments.SwitchToSnow();
+        else if (msg == "RAIN")  managingEnvironments.SwitchToRain();
+        else
+        {
+            Debug.Log($"[TCPServer] Plain message not recognized as environment command: {msg}");
+        }
+    }
+
+    /// <summary>
+    /// Coroutine to load and play an MP3 from a local file path using UnityWebRequest.
+    /// </summary>
+    IEnumerator PlayAudioClip(string path)
+    {
+        // For a local file, prefix with file://
+        string url = "file://" + path;
+
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError ||
+                www.result == UnityWebRequest.Result.ProtocolError)
             {
-                managingEnvironments.SwitchToSnow();
+                Debug.LogError($"[TCPServer] Error loading audio clip: {www.error}");
+                yield break;
             }
-            else if (message.ToUpper() == "RAIN")
+
+            AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+            if (clip == null)
             {
-                managingEnvironments.SwitchToRain();
+                Debug.LogError("[TCPServer] Failed to decode audio clip");
+                yield break;
             }
+
+            // Immediately play the clip at the origin
+            AudioSource.PlayClipAtPoint(clip, Vector3.zero);
         }
     }
 
     void OnApplicationQuit()
     {
-        // Stop the server and all client handlers
         isRunning = false;
         if (server != null)
         {
@@ -139,10 +218,6 @@ public class TCPServer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Sends a message to all connected clients.
-    /// </summary>
-    /// <param name="message">The message to send.</param>
     public void SendMessageToAll(string message)
     {
         foreach (var client in clients)
@@ -154,11 +229,6 @@ public class TCPServer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Sends a message to a specific client.
-    /// </summary>
-    /// <param name="client">The client to send the message to.</param>
-    /// <param name="message">The message to send.</param>
     public void SendMessageToClient(ClientHandler client, string message)
     {
         if (client != null && client.IsConnected)
@@ -167,18 +237,7 @@ public class TCPServer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Optionally, provide a method to get all clients or a specific client based on some criteria.
-    /// </summary>
-    /// <returns>Enumerable of clients.</returns>
-    public ConcurrentBag<ClientHandler> GetAllClients()
-    {
-        return clients;
-    }
-
-    /// <summary>
-    /// Handles communication with a connected client.
-    /// </summary>
+    // ---- CLIENT HANDLER CLASS ----
     public class ClientHandler
     {
         private TcpClient client;
@@ -187,11 +246,8 @@ public class TCPServer : MonoBehaviour
         private Thread sendThread;
         private bool isConnected = false;
 
-        // Thread-safe queue for outgoing messages
         private ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
         private AutoResetEvent sendEvent = new AutoResetEvent(false);
-
-        // Reference to the main server's message queue
         private ConcurrentQueue<string> serverMessageQueue;
 
         public bool IsConnected { get { return isConnected; } }
@@ -206,8 +262,6 @@ public class TCPServer : MonoBehaviour
         public void Start()
         {
             isConnected = true;
-
-            // Start the receive and send threads
             receiveThread = new Thread(ReceiveLoop);
             receiveThread.IsBackground = true;
             receiveThread.Start();
@@ -217,17 +271,16 @@ public class TCPServer : MonoBehaviour
             sendThread.Start();
         }
 
-        /// <summary>
-        /// Continuously receives data from the client.
-        /// </summary>
         private void ReceiveLoop()
         {
             try
             {
                 byte[] buffer = new byte[1024];
+                // Accumulate partial data here
+                StringBuilder partialData = new StringBuilder();
+
                 while (isConnected)
                 {
-                    // Read data from the client
                     int bytesRead = stream.Read(buffer, 0, buffer.Length);
                     if (bytesRead == 0)
                     {
@@ -236,11 +289,32 @@ public class TCPServer : MonoBehaviour
                         break;
                     }
 
-                    string received = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Debug.Log($"Received from client: {received}");
+                    // Convert to string
+                    string chunk = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                    // Enqueue the received message to the server's message queue
-                    serverMessageQueue.Enqueue(received);
+                    // Append to the partial buffer
+                    partialData.Append(chunk);
+
+                    // Check if we have one or more '\n' in the buffer
+                    while (true)
+                    {
+                        // Look for newline
+                        int newlineIndex = partialData.ToString().IndexOf('\n');
+                        if (newlineIndex == -1)
+                        {
+                            // No full message yet
+                            break;
+                        }
+
+                        // Extract everything up to the newline
+                        string fullMessage = partialData.ToString(0, newlineIndex);
+                        // Remove that line + the newline from the StringBuilder
+                        partialData.Remove(0, newlineIndex + 1);
+
+                        // Now we have a complete message
+                        Debug.Log($"Received a full message: {fullMessage}");
+                        serverMessageQueue.Enqueue(fullMessage);
+                    }
                 }
             }
             catch (Exception e)
@@ -253,18 +327,13 @@ public class TCPServer : MonoBehaviour
             }
         }
 
-        /// <summary>
-        /// Continuously sends data to the client.
-        /// </summary>
         private void SendLoop()
         {
             try
             {
                 while (isConnected)
                 {
-                    // Wait for a message to send
                     sendEvent.WaitOne();
-
                     while (sendQueue.TryDequeue(out string message))
                     {
                         byte[] data = Encoding.UTF8.GetBytes(message);
@@ -283,45 +352,22 @@ public class TCPServer : MonoBehaviour
             }
         }
 
-        /// <summary>
-        /// Adds a message to the send queue.
-        /// </summary>
-        /// <param name="message">The message to send.</param>
         public void EnqueueMessage(string message)
         {
             sendQueue.Enqueue(message);
             sendEvent.Set();
         }
 
-        /// <summary>
-        /// Stops the client handler and closes connections.
-        /// </summary>
         public void Stop()
         {
-            if (!isConnected)
-                return;
-
+            if (!isConnected) return;
             isConnected = false;
 
-            // Close the network stream and client
-            try
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-            catch { }
+            try { stream?.Close(); } catch {}
+            try { client?.Close(); } catch {}
 
-            try
-            {
-                if (client != null)
-                    client.Close();
-            }
-            catch { }
-
-            // Signal the send thread to exit
             sendEvent.Set();
 
-            // Wait for threads to finish
             if (receiveThread != null && receiveThread.IsAlive)
                 receiveThread.Join();
 
@@ -331,4 +377,11 @@ public class TCPServer : MonoBehaviour
             Debug.Log("Client handler stopped.");
         }
     }
+}
+
+[Serializable]
+public struct MyAudioMessage
+{
+    public string Category;
+    public string AudioData;
 }
