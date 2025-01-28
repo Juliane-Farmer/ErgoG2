@@ -35,3 +35,5 @@ The *Visual GlobeTrotter* project leverages Unity and AI to create an engaging v
 1. Clone this repository:
    ```sh
    git clone https://github.com/Juliane-Farmer/ErgoG2.git
+   ```
+2.	Follow the Installation Guide (Installation guide.pdf) for setup instructions.
