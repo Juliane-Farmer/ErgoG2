@@ -169,7 +169,7 @@ public class TCPServer : MonoBehaviour
     /// <summary>
     /// Coroutine to load and play an MP3 from a local file path using UnityWebRequest.
     /// </summary>
-    IEnumerator PlayAudioClip(string path)
+    IEnumerator PlayAudioClip(string path, float volume = 20.0f)
     {
         // For a local file, prefix with file://
         string url = "file://" + path;
@@ -192,8 +192,17 @@ public class TCPServer : MonoBehaviour
                 yield break;
             }
 
-            // Immediately play the clip at the origin
-            AudioSource.PlayClipAtPoint(clip, Vector3.zero);
+            // Create a new GameObject to hold the AudioSource
+            GameObject audioObject = new GameObject("TemporaryAudio");
+            AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+
+            // Configure the AudioSource
+            audioSource.clip = clip;
+            audioSource.volume = Mathf.Clamp01(volume); // Ensure the volume is between 0 and 1
+            audioSource.Play();
+
+            // Destroy the GameObject after the clip finishes playing
+            Destroy(audioObject, clip.length);
         }
     }
 
